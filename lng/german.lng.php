@@ -1777,3 +1777,7 @@ $lng['serversettings']['froxlorusergroup']['description'] = 'Voraussetzung hierf
 $lng['error']['local_group_exists'] = 'Die angegebene Gruppe existiert bereits auf dem System';
 $lng['error']['local_group_invalid'] = 'Der angegebene Gruppen-Name ist nicht gültig';
 $lng['error']['invaliddnsforletsencrypt'] = 'Die DNS-Einträge der Domain enhalten keine der gewählten IP Adressen. Let\'s Encrypt Zertifikats-Erstellung ist nicht möglich.';
+
+// added in froxlor xxxx by gelbehexe
+$lng['serversettings']['phpindexlast']['title'] = 'HTML-Indexdatei als Standardindex anstelle von &quot;index.php&quot; bevorzugen';
+$lng['serversettings']['phpindexlast']['description'] = 'Wenn gesetzt, dann hat &quot;index.php&quot; die niedrigste Priorität als &quot;directory index&quot;, so dass wenn eine &quot;index.html&quot;-Datei existiert, diese auch angezeigt wird, wenn &quot;index.php&quot; existiert.';

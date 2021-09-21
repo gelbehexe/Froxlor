@@ -2131,3 +2131,7 @@ $lng['serversettings']['froxlorusergroup']['description'] = 'Usage of libnss-ext
 $lng['error']['local_group_exists'] = 'The given group already exists on the system.';
 $lng['error']['local_group_invalid'] = 'The given group name is invalid';
 $lng['error']['invaliddnsforletsencrypt'] = 'The domains DNS does not include any of the chosen IP addresses. Let\'s Encrypt certificate generation not possible.';
+
+// added in froxlor xxxx by gelbehexe
+$lng['serversettings']['phpindexlast']['title'] = 'Prefer html index file as the default index instead of &quot;index.php&quot;';
+$lng['serversettings']['phpindexlast']['description'] = 'If set &quot;index.php&quot; has the lowest priority for directory index, which means that if there is &quot;index.html&quot; file, this file will be shown when no path is given, even if &quot;index.php&quot; exists.';
