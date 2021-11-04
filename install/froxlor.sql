@@ -606,6 +606,7 @@ opcache.interned_strings_buffer'),
 	('system', 'http2_support', '0'),
 	('system', 'perl_server', 'unix:/var/run/nginx/cgiwrap-dispatch.sock'),
 	('system', 'phpreload_command', ''),
+	('system', 'phpindexlast', '0'),
 	('system', 'apache24', '1'),
 	('system', 'apache24_ocsp_cache_path', 'shmcb:/var/run/apache2/ocsp-stapling.cache(131072)'),
 	('system', 'documentroot_use_default_value', '0'),
@@ -722,8 +723,8 @@ opcache.interned_strings_buffer'),
 	('panel', 'logo_image_login', ''),
 	('panel', 'logo_overridetheme', '0'),
 	('panel', 'logo_overridecustom', '0'),
-	('panel', 'version', '0.10.29.1'),
-	('panel', 'db_version', '202109040');
+	('panel', 'version', '0.10.29.1-local-0'),
+	('panel', 'db_version', '202111040-local-0');
 
 
 DROP TABLE IF EXISTS `panel_tasks`;
