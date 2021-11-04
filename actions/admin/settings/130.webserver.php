@@ -40,6 +40,17 @@ return array(
 					),
 					'overview_option' => true
 				),
+				'system_phpindexlast' => array(
+					'label' => $lng['serversettings']['phpindexlast'],
+					'settinggroup' => 'system',
+					'varname' => 'phpindexlast',
+					'type' => 'bool',
+					'default' => false,
+					'save_method' => 'storeSettingField',
+					'websrv_avail' => array(
+						'nginx'
+					)
+				),
 				'system_apache_24' => array(
 					'label' => $lng['serversettings']['apache_24'],
 					'settinggroup' => 'system',

@@ -2135,3 +2135,7 @@ $lng['error']['notallowedphpconfigused'] = 'Trying to use php-config which is no
 
 $lng['serversettings']['phpfpm_settings']['allow_all_customers']['title'] = 'Assign this configuration to all currently existing customers';
 $lng['serversettings']['phpfpm_settings']['allow_all_customers']['description'] = 'Set this to "true" if you want to assign this configuration to all currently existing customers so it can be used by them. This setting is not permanent but can be run multiple times.';
+
+// added in froxlor xxxx by gelbehexe
+$lng['serversettings']['phpindexlast']['title'] = 'Prefer html index file as the default index instead of &quot;index.php&quot;';
+$lng['serversettings']['phpindexlast']['description'] = 'If set &quot;index.php&quot; has the lowest priority for directory index, which means that if there is &quot;index.html&quot; file, this file will be shown when no path is given, even if &quot;index.php&quot; exists.';

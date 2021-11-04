@@ -1781,3 +1781,7 @@ $lng['error']['notallowedphpconfigused'] = 'Nutzung einer PHP-Konfiguration welc
 
 $lng['serversettings']['phpfpm_settings']['allow_all_customers']['title'] = 'Für aktuelle Kunden automatisch hinzufügen';
 $lng['serversettings']['phpfpm_settings']['allow_all_customers']['description'] = 'Ist diese Einstellung aktiv, wird die Konfiguration automatisch allen aktuell existierenden Kunden-Accounts zugewiesen. Diese Einstellung ist nicht permanent, kann aber mehrfach / nach Bedarf ausgeführt werden.';
+
+// added in froxlor xxxx by gelbehexe
+$lng['serversettings']['phpindexlast']['title'] = 'HTML-Indexdatei als Standardindex anstelle von &quot;index.php&quot; bevorzugen';
+$lng['serversettings']['phpindexlast']['description'] = 'Wenn gesetzt, dann hat &quot;index.php&quot; die niedrigste Priorität als &quot;directory index&quot;, so dass wenn eine &quot;index.html&quot;-Datei existiert, diese auch angezeigt wird, wenn &quot;index.php&quot; existiert.';
