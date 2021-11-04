@@ -945,6 +945,19 @@ if (\Froxlor\Froxlor::isFroxlorVersion('0.10.29')) {
 }
 
 if (\Froxlor\Froxlor::isFroxlorVersion('0.10.29.1')) {
-	showUpdateStep("Updating from 0.10.29.1 to 0.10.30", false);
-	\Froxlor\Froxlor::updateToVersion('0.10.30');
+    showUpdateStep("Updating from 0.10.29.1 to 0.10.29.1-local-0", false);
+    \Froxlor\Froxlor::updateToVersion('0.10.29.1-local-0');
 }
+
+if (\Froxlor\Froxlor::isDatabaseVersion('202109040')) {
+    showUpdateStep("Adding index order for NGINX", true);
+    Settings::AddNew("system.phpindexlast", '0');
+    lastStepStatus(0);
+    \Froxlor\Froxlor::updateToDbVersion('202111040-local-0');
+}
+
+if (\Froxlor\Froxlor::isFroxlorVersion('0.10.29.1-local-0')) {
+	showUpdateStep("Updating from 0.10.29.1-local-0 to 0.10.30", false);
+	\Froxlor\Froxlor::updateToVersion('0.10.30-local-0');
+}
+
