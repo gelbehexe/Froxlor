@@ -957,7 +957,11 @@ if (\Froxlor\Froxlor::isDatabaseVersion('202109040')) {
 }
 
 if (\Froxlor\Froxlor::isFroxlorVersion('0.10.29.1-local-0')) {
-	showUpdateStep("Updating from 0.10.29.1-local-0 to 0.10.30-local-0", false);
-	\Froxlor\Froxlor::updateToVersion('0.10.30-local-0');
+    showUpdateStep("Updating from 0.10.29.1-local-0 to 0.10.30-local-0", false);
+    \Froxlor\Froxlor::updateToVersion('0.10.30-local-0');
 }
 
+if (\Froxlor\Froxlor::isFroxlorVersion('0.10.30-local-0')) {
+    showUpdateStep("Updating from 0.10.30-local-0 to 0.10.31-local-0", false);
+    \Froxlor\Froxlor::updateToVersion('0.10.31-local-0');
+}
