@@ -91,7 +91,7 @@ class Froxlor extends \Froxlor\Api\ApiCommand
 							'additional_info' => $message_addinfo
 						));
 					} else {
-						\Froxlor\UI\Response::standard_error('customized_version', '', true);
+						\Froxlor\UI\Response::standard_error('customized_version', '', false);
 					}
 				}
 			}
