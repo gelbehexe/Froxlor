@@ -2138,3 +2138,6 @@ $lng['serversettings']['phpfpm_settings']['allow_all_customers']['description'] 
 $lng['error']['pathmustberelative'] = 'The user does not have the permission to specify directories outside the customers home-directory. Please specify a relative path (no leading /).';
 $lng['serversettings']['acmeshpath']['title'] = 'Path to acme.sh';
 $lng['serversettings']['acmeshpath']['description'] = 'Set this to where acme.sh is installed to, including the acme.sh script<br>Default is <b>/root/.acme.sh/acme.sh</b>';
+
+$lng['serversettings']['phpindexlast']['title'] = 'Prefer html index file as the default index instead of &quot;index.php&quot; (Nginx only)';
+$lng['serversettings']['phpindexlast']['description'] = 'If set &quot;index.php&quot; has the lowest priority for directory index, which means that if there is &quot;index.html&quot; file, this file will be shown when no path is given, even if &quot;index.php&quot; exists.';

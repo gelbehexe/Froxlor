@@ -1784,3 +1784,6 @@ $lng['serversettings']['phpfpm_settings']['allow_all_customers']['description'] 
 $lng['error']['pathmustberelative'] = 'Der Benutzer hat nicht die benötigten Berechtigungen, um Pfade außerhalb des Kunden-Heimatverzeichnisses anzugeben. Bitte einen relativen Pfad angeben (kein führendes /).';
 $lng['serversettings']['acmeshpath']['title'] = 'Pfad zu acme.sh';
 $lng['serversettings']['acmeshpath']['description'] = 'Installationspfad zu acme.sh, inklusive acme.sh Script<br>Standard ist <b>/root/.acme.sh/acme.sh</b>';
+
+$lng['serversettings']['phpindexlast']['title'] = 'HTML-Indexdatei als Standardindex anstelle von &quot;index.php&quot; bevorzugen (nur Nginx)';
+$lng['serversettings']['phpindexlast']['description'] = 'Wenn gesetzt, dann hat &quot;index.php&quot; die niedrigste Priorität als &quot;directory index&quot;, so dass wenn eine &quot;index.html&quot;-Datei existiert, diese auch angezeigt wird, wenn &quot;index.php&quot; existiert.';

@@ -54,6 +54,13 @@ class Nginx extends HttpConfigBase
 		$this->nginx_server = $nginx_server;
 	}
 
+    private function getPhpIndexOrder() {
+        if (Settings::Get('system.phpindexlast') == '1') {
+            return 'index    index.html index.htm index.php;';
+        }
+        return 'index    index.php index.html index.htm;';
+    }
+
 	private function createLogformatEntry()
 	{
 		if (Settings::Get('system.logfiles_format') != '') {
@@ -264,7 +271,7 @@ class Nginx extends HttpConfigBase
 
 				if (! $is_redirect) {
 					$this->nginx_data[$vhost_filename] .= "\t" . 'root     ' . $mypath . ';' . "\n";
-					$this->nginx_data[$vhost_filename] .= "\t" . 'index    index.php index.html index.htm;' . "\n\n";
+					$this->nginx_data[$vhost_filename] .= "\t" . $this->getPhpIndexOrder() . "\n\n";
 					$this->nginx_data[$vhost_filename] .= "\t" . 'location / {' . "\n";
 					$this->nginx_data[$vhost_filename] .= "\t" . '}' . "\n";
 				}
@@ -828,7 +835,7 @@ class Nginx extends HttpConfigBase
 									$path_options .= "\t\t" . 'auth_basic            "' . $single['authname'] . '";' . "\n";
 									$path_options .= "\t\t" . 'auth_basic_user_file  ' . \Froxlor\FileDir::makeCorrectFile($single['usrf']) . ';' . "\n";
 									if ($domain['phpenabled_customer'] == 1 && $domain['phpenabled_vhost'] == '1') {
-										$path_options .= "\t\t" . 'index    index.php index.html index.htm;' . "\n";
+										$path_options .= "\t\t" . $this->getPhpIndexOrder() . "\n";
 									} else {
 										$path_options .= "\t\t" . 'index    index.html index.htm;' . "\n";
 									}
@@ -890,7 +897,7 @@ class Nginx extends HttpConfigBase
 						$path_options .= "\t\t" . 'auth_basic            "' . $single['authname'] . '";' . "\n";
 						$path_options .= "\t\t" . 'auth_basic_user_file  ' . \Froxlor\FileDir::makeCorrectFile($single['usrf']) . ';' . "\n";
 						if ($domain['phpenabled_customer'] == 1 && $domain['phpenabled_vhost'] == '1') {
-							$path_options .= "\t\t" . 'index    index.php index.html index.htm;' . "\n";
+							$path_options .= "\t\t" . $this->getPhpIndexOrder() . "\n";
 						} else {
 							$path_options .= "\t\t" . 'index    index.html index.htm;' . "\n";
 						}
@@ -1010,7 +1017,7 @@ class Nginx extends HttpConfigBase
 		$webroot_text .= "\n\t" . 'location / {' . "\n";
 
 		if ($domain['phpenabled_customer'] == 1 && $domain['phpenabled_vhost'] == '1') {
-			$webroot_text .= "\t" . 'index    index.php index.html index.htm;' . "\n";
+			$webroot_text .= "\t" . $this->getPhpIndexOrder() . "\n";
 			if ($domain['notryfiles'] != 1) {
 				$webroot_text .= "\t\t" . 'try_files $uri $uri/ @rewrites;' . "\n";
 			}
