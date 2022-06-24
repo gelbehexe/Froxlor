@@ -991,3 +991,15 @@ if (\Froxlor\Froxlor::isFroxlorVersion('0.10.35')) {
 	showUpdateStep("Updating from 0.10.35 to 0.10.35.1", false);
 	\Froxlor\Froxlor::updateToVersion('0.10.35.1');
 }
+
+if (\Froxlor\Froxlor::isFroxlorVersion('0.10.35.1')) {
+	showUpdateStep("Updating from 0.10.35.1 to 0.10.35.1-local-0", false);
+	\Froxlor\Froxlor::updateToVersion('0.10.35.1-local-0');
+}
+
+if (\Froxlor\Froxlor::isDatabaseVersion('202112310')) {
+    showUpdateStep("Add setting Nginx index.php position", true);
+    Settings::AddNew("system.phpindexlast", '0');
+    lastStepStatus(0);
+    \Froxlor\Froxlor::updateToDbVersion('202112319');
+}
