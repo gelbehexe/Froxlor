@@ -601,7 +601,7 @@ class Nginx extends HttpConfigBase
                 \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, serialize($domain));
 
 
-                if ($domain === 'matomo.pegu.de') {
+                if ($domain['domain'] === 'matomo.pegu.de') {
                     print_r($specialSettings);
                     die();
                 }
