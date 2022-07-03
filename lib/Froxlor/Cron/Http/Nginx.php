@@ -418,6 +418,31 @@ class Nginx extends HttpConfigBase
 		return $vhost_filename;
 	}
 
+    /**
+     * @param $content
+     *
+     * @return array|string[]
+     */
+    private function splitSpecialSettings($content)
+    {
+        $parts = preg_split('/^\s+?#\s*--PRIORITY_SETTINGS_SPLITTER--\s*$/',$content,2);
+        if (!is_array($parts)) {
+            \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_WARNING, 'Could not split with prior_settings_splitter');
+            \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, 'Could not split with prior_settings_splitter: '.'"'. serialize($content) .'"');
+            // leave it untouched
+            return ['',$content];
+        }
+        $parts = array_map('trim', $parts);
+        switch (count($parts)) {
+            case 0:
+                return ['', ''];
+            case 1:
+                return ['', $parts[0]];
+            default:
+                return $parts;
+        }
+    }
+
 	protected function getVhostContent($domain, $ssl_vhost = false)
 	{
 		if ($ssl_vhost === true && $domain['ssl'] != '1' && $domain['ssl_redirect'] != '1') {
@@ -551,26 +576,65 @@ class Nginx extends HttpConfigBase
 				$vhost_content .= $this->composePhpOptions($domain, $ssl_vhost);
 
 				$vhost_content .= isset($this->needed_htpasswds[$domain['id']]) ? $this->needed_htpasswds[$domain['id']] . "\n" : '';
+                $specialSettings = [];
 
 				if ($domain['specialsettings'] != '' && ($ssl_vhost == false || ($ssl_vhost == true && $domain['include_specialsettings'] == 1))) {
-					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate($domain['specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
+                    $specialSettings['special_settings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate($domain['specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
 				}
 
 				if ($domain['ssl_specialsettings'] != '' && $ssl_vhost == true) {
-					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate($domain['ssl_specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
+                    $specialSettings['ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate($domain['ssl_specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
 				}
 
-				if ($_vhost_content != '') {
-					$vhost_content = $this->mergeVhostCustom($vhost_content, $_vhost_content);
-				}
+                if ($_vhost_content != '') {
+                    $specialSettings['empty'] = true;
+                }
 
-				if (Settings::Get('system.default_vhostconf') != '' && ($ssl_vhost == false || ($ssl_vhost == true && Settings::Get('system.include_default_vhostconf') == 1))) {
-					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate(Settings::Get('system.default_vhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
-				}
+                if (Settings::Get('system.default_vhostconf') != '' && ($ssl_vhost == false || ($ssl_vhost == true && Settings::Get('system.include_default_vhostconf') == 1))) {
+                    $specialSettings['system_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_vhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+                }
 
-				if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
-					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
-				}
+                if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
+                    $specialSettings['system_ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+                }
+
+                foreach($specialSettings as $type => [$before, $after]) {
+                    if ($type === 'empty') {
+                        $vhost_content = $this->mergeVhostCustom($vhost_content, $_vhost_content);
+                        continue;
+                    }
+                    if (!empty($before)) {
+                        $vhost_content .= "\n" . $vhost_content;
+                    }
+                    if (!empty($after)) {
+                        $vhost_content = $this->mergeVhostCustom($vhost_content, $after);
+                    }
+                }
+
+//                ///////
+//				if ($domain['specialsettings'] != '' && ($ssl_vhost == false || ($ssl_vhost == true && $domain['include_specialsettings'] == 1))) {
+//                    $specialSettings['special_settings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate($domain['specialsettings']);
+//					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate($domain['specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
+//				}
+//
+//				if ($domain['ssl_specialsettings'] != '' && $ssl_vhost == true) {
+//                    $specialSettings['ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate($domain['ssl_specialsettings']);
+//					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate($domain['ssl_specialsettings'], $domain, $domain['ip'], $domain['port'], $ssl_vhost));
+//				}
+//
+//				if ($_vhost_content != '') {
+//					$vhost_content = $this->mergeVhostCustom($vhost_content, $_vhost_content);
+//				}
+//
+//				if (Settings::Get('system.default_vhostconf') != '' && ($ssl_vhost == false || ($ssl_vhost == true && Settings::Get('system.include_default_vhostconf') == 1))) {
+//                    $specialSettings['system_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_vhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+//					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate(Settings::Get('system.default_vhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+//				}
+//
+//				if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
+//                    $specialSettings['system_ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+//					$vhost_content = $this->mergeVhostCustom($vhost_content, $this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+//				}
 			}
 		}
 		$vhost_content .= "\n}\n\n";
