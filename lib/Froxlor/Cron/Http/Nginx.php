@@ -426,8 +426,6 @@ class Nginx extends HttpConfigBase
     private function splitSpecialSettings($content)
     {
         $parts = preg_split('/^\s+?#\s*--PRIORITY_SETTINGS_SPLITTER--\s*$/',$content,2);
-        print_r($parts);
-        die("####");
         if (!is_array($parts)) {
             \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_WARNING, 'Could not split with prior_settings_splitter');
             \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, 'Could not split with prior_settings_splitter: '.'"'. serialize($content) .'"');
@@ -598,6 +596,11 @@ class Nginx extends HttpConfigBase
 
                 if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
                     $specialSettings['system_ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
+                }
+
+                if ($domain === 'matomo.pegu.de') {
+                    print_r($specialSettings);
+                    die();
                 }
 
                 foreach($specialSettings as $type => [$before, $after]) {
