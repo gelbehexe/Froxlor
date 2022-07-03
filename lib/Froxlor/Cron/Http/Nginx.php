@@ -598,7 +598,7 @@ class Nginx extends HttpConfigBase
                 if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
                     $specialSettings['system_ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
                 }
-                \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, $domain);
+                \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, serialize($domain));
 
 
                 if ($domain === 'matomo.pegu.de') {
