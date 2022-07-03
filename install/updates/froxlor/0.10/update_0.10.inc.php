@@ -1003,3 +1003,8 @@ if (\Froxlor\Froxlor::isDatabaseVersion('202112310')) {
     lastStepStatus(0);
     \Froxlor\Froxlor::updateToDbVersion('202112319');
 }
+
+if (\Froxlor\Froxlor::isFroxlorVersion('0.10.35.1-local-0')) {
+    showUpdateStep("Updating from 0.10.35.1-local-0 to 0.10.36-local-0", false);
+    \Froxlor\Froxlor::updateToVersion('0.10.36-local-0');
+}
