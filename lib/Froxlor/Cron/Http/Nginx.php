@@ -2,6 +2,7 @@
 namespace Froxlor\Cron\Http;
 
 use Froxlor\Database\Database;
+use Froxlor\Froxlor;
 use Froxlor\Settings;
 use Froxlor\Cron\Http\Php\PhpInterface;
 
@@ -597,6 +598,8 @@ class Nginx extends HttpConfigBase
                 if (Settings::Get('system.default_sslvhostconf') != '' && $ssl_vhost == true) {
                     $specialSettings['system_ssl_specialsettings'] = $this->splitSpecialSettings($this->processSpecialConfigTemplate(Settings::Get('system.default_sslvhostconf'), $domain, $domain['ip'], $domain['port'], $ssl_vhost) . "\n");
                 }
+                \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, $domain);
+
 
                 if ($domain === 'matomo.pegu.de') {
                     print_r($specialSettings);
