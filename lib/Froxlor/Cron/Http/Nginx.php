@@ -603,7 +603,7 @@ class Nginx extends HttpConfigBase
 
                 if ($domain['domain'] === 'matomo.pegu.de') {
                     print_r($specialSettings);
-                    die();
+//                    die();
                 }
 
                 foreach($specialSettings as $type => [$before, $after]) {
