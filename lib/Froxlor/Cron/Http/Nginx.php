@@ -601,6 +601,15 @@ class Nginx extends HttpConfigBase
 //                \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, serialize($domain));
 
 
+                foreach($specialSettings as $type => [$before, $after]) {
+                    if ($type === 'empty' || empty($before)) {
+                        continue;
+                    }
+
+//                    $vhost_content .= $before . "\n";
+                    $vhost_content = $this->mergeVhostCustom($vhost_content, $before);
+                }
+
                 if ($domain['domain'] === 'matomo.pegu.de') {
                     print_r($specialSettings);
 //                    die();
@@ -612,7 +621,7 @@ class Nginx extends HttpConfigBase
                         continue;
                     }
                     if (!empty($before)) {
-                        $vhost_content = $this->mergeVhostCustom($before, $vhost_content);
+//                        $vhost_content = $this->mergeVhostCustom($before, $vhost_content);
                     }
                     if (!empty($after)) {
                         $vhost_content = $this->mergeVhostCustom($vhost_content, $after);
