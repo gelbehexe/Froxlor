@@ -129,9 +129,6 @@ class Settings
 		if (isset(self::$data[$sstr[0]][$sstr[1]])) {
 			$result = self::$data[$sstr[0]][$sstr[1]];
 		}
-        if ($setting === 'system.apacheconf_vhost') {
-//            $result = '/tmp' . $result;
-        }
 		return $result;
 	}
 
