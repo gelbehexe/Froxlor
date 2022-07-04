@@ -130,7 +130,7 @@ class Settings
 			$result = self::$data[$sstr[0]][$sstr[1]];
 		}
         if ($setting === 'system.apacheconf_vhost') {
-            $result = '/tmp' . $result;
+//            $result = '/tmp' . $result;
         }
 		return $result;
 	}
