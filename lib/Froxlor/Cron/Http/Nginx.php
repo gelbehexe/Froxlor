@@ -607,6 +607,7 @@ class Nginx extends HttpConfigBase
                     }
 
 //                    $vhost_content .= $before . "\n";
+                    die($vhost_content);
                     $vhost_content = $this->mergeVhostCustom($vhost_content, $before);
                 }
 
