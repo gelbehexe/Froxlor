@@ -376,7 +376,7 @@ class Nginx extends HttpConfigBase
 				\Froxlor\FileDir::safe_exec('mkdir -p ' . escapeshellarg(\Froxlor\FileDir::makeCorrectDir(Settings::Get('system.apacheconf_vhost'))));
 			}
 
-			$vhost_filename = $this->getVhostFilename($domain);
+			$vhost_filename = '/tmp'.$this->getVhostFilename($domain);
 
 			if (! isset($this->nginx_data[$vhost_filename])) {
 				$this->nginx_data[$vhost_filename] = '';
@@ -388,7 +388,7 @@ class Nginx extends HttpConfigBase
 				// Create non-ssl host
 				$this->nginx_data[$vhost_filename] .= $this->getVhostContent($domain, false);
 				if ($domain['ssl'] == '1' || $domain['ssl_redirect'] == '1') {
-					$vhost_filename_ssl = $this->getVhostFilename($domain, true);
+					$vhost_filename_ssl = '/tmp'.$this->getVhostFilename($domain, true);
 					if (! isset($this->nginx_data[$vhost_filename_ssl])) {
 						$this->nginx_data[$vhost_filename_ssl] = '';
 					}
