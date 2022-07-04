@@ -426,7 +426,7 @@ class Nginx extends HttpConfigBase
      */
     private function splitSpecialSettings($content)
     {
-        $parts = preg_split('/^\s+?#\s*--PRIORITY_SETTINGS_SPLITTER--\s*$/',$content,2);
+        $parts = preg_split('/^\s*#\s*--PRIORITY_SETTINGS_SPLITTER--\s*$/m',$content,2);
         if (!is_array($parts)) {
             \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_WARNING, 'Could not split with prior_settings_splitter');
             \Froxlor\FroxlorLogger::getInstanceOf()->logAction(\Froxlor\FroxlorLogger::CRON_ACTION, LOG_DEBUG, 'Could not split with prior_settings_splitter: '.'"'. serialize($content) .'"');
