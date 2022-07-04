@@ -1303,7 +1303,6 @@ class Nginx extends HttpConfigBase
 			}
 
 			$vhosts_filename = Settings::Get('system.apacheconf_vhost');
-            die("###$vhosts_filename###");
 
 			// Apply header
 			$vhosts_file = '# ' . basename($vhosts_filename) . "\n" . '# Created ' . date('d.m.Y H:i') . "\n" . '# Do NOT manually edit this file, all changes will be deleted after the next domain change at the panel.' . "\n" . "\n" . $vhosts_file;
